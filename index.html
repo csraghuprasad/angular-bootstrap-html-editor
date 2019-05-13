@@ -25,8 +25,8 @@
 
 <script>
     angular.module("editor", ['htmlEditor'])
-        .controller('editorCtrl', ['$scope','$timeout' , function ($scope,$timeout) {
-            $scope.htmlContent='<h1>Simple HTML editor</h1><p>Enjoy</p>'
+        .controller('editorCtrl', ['$scope' , function ($scope) {
+                $scope.htmlContent='<h2>Simple HTML editor</h2><p>Enjoy!</p>';
         }])
 </script>
 </body>
