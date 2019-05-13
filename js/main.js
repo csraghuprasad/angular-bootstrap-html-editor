@@ -24,7 +24,6 @@ angular.module("editor", ['htmlEditor', "ui.router"])
         $stateProvider.state(installationState);
         $stateProvider.state(demoState);
 
-        $locationProvider.html5Mode(true);
     }).controller('mainCtrl', ['$scope', function ($scope) {
 
     }]).controller('demoCtrl', ['$scope', function ($scope) {
