@@ -4,10 +4,12 @@
 .c-white {
     color: white;
 }
+.page-content{
+    padding: 15px;
+}
 div[html-editor]{
     box-shadow: 0 0 4px 0 #eee;
     border: 1px solid #eee;
-    margin: 40px 20px;
 }
 .html-editor {
     padding: 15px;

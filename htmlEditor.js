@@ -18,7 +18,7 @@ angular.module("htmlEditor", [])
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.justifyCenter.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'justifyCenter\')" ng-if="commands.justifyCenter.support" data-toggle="tooltip" title="Justify Center"><i class="glyphicon glyphicon-align-center"></i></button>' +
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.justifyRight.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'justifyRight\')" ng-if="commands.justifyRight.support" data-toggle="tooltip" title="Justify Right"><i class="glyphicon glyphicon-align-right"></i></button>' +
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.justifyFull.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'justifyFull\')" ng-if="commands.justifyFull.support" data-toggle="tooltip" title="Justify Full"><i class="glyphicon glyphicon-align-justify"></i></button>' +
-                /*'<button type="button" class="btn btn-xs btn-default sharp" onmousedown="event.preventDefault();" ng-click="exeCmd(\'insertHorizontalRule\')" ng-if="commands.insertHorizontalRule.support" data-toggle="tooltip" title="Horizontal Rule">HR</button>'+*/
+            '<button type="button" class="btn btn-xs btn-default sharp" onmousedown="event.preventDefault();" ng-click="exeCmd(\'insertHorizontalRule\')" ng-if="commands.insertHorizontalRule.support" data-toggle="tooltip" title="Horizontal Rule">HR</button>'+
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.strikeThrough.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'strikeThrough\')" ng-if="commands.strikeThrough.support" data-toggle="tooltip" title="Strike Through"><span style="text-decoration: line-through;">S</span></button>' +
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.subscript.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'subscript\')" ng-if="commands.subscript.support" data-toggle="tooltip" title="Subscript"><i class="glyphicon glyphicon-subscript"></i></button>' +
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.superscript.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'superscript\')" ng-if="commands.superscript.support" data-toggle="tooltip" title="Superscript"><i class="glyphicon glyphicon-superscript"></i></button>' +
@@ -32,15 +32,26 @@ angular.module("htmlEditor", [])
             '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'insertOrderedList\',\'decimal\')"><a>Number</a></li>' +
             '</ul>' +
             '</div>' +
-            '<div class="btn-group" ng-if="commands.fontSize.support" data-toggle="tooltip" title="Heading">' +
+            '<div class="btn-group" ng-if="commands.fontSize.support" data-toggle="tooltip" title="Font Size">' +
             '<button type="button" class="btn btn-xs btn-default sharp dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-text-size"></i> <span class="caret"></span></button>' +
             '<ul class="dropdown-menu">' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',6)"><a>h1</a></li>' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',5)"><a>h2</a></li>' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',4)"><a>h3</a></li>' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',3)"><a>h4</a></li>' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',2)"><a>h5</a></li>' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',1)"><a>h6</a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',6)"><a>Size 6</a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',5)"><a>Size 5</a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',4)"><a>Size 4</a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',3)"><a>Size 3</a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',2)"><a>Size 2</a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',1)"><a>Size 1</a></li>' +
+            '</ul>' +
+            '</div>' +
+            '<div class="btn-group" ng-if="commands.heading.support" data-toggle="tooltip" title="Heading">' +
+            '<button type="button" class="btn btn-xs btn-default sharp dropdown-toggle" data-toggle="dropdown">H <span class="caret"></span></button>' +
+            '<ul class="dropdown-menu">' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h6\')"><a>H6</a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h5\')"><a>H5</a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h4\')"><a>H4</a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h3\')"><a>H3</a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h2\')"><a>H2</a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h1\')"><a>H1</a></li>' +
             '</ul>' +
             '</div>' +
             '<button type="button" class="btn btn-xs btn-default sharp" onmousedown="event.preventDefault();" ng-if="commands.createLink.support  && !is_ie" data-toggle="tooltip" title="Link" ng-click="showLinkModal()"><i class="glyphicon glyphicon-link"></i></button>' +
@@ -427,6 +438,9 @@ angular.module("htmlEditor", [])
                     },
                     insertHTML: {
                         cmd: 'insertHTML'
+                    },
+                    heading: {
+                        cmd: 'heading'
                     }
                 };
 
