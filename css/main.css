@@ -19,8 +19,9 @@ footer .cr {
     display: inline-block;
     padding: 10px
 }
-a.active{
-    color: deepskyblue;
+.navbar-default .navbar-nav>li>a.active{
+    color: white;
+    background-color: #777;
 }
 .sharp {
     border-radius: 0;
