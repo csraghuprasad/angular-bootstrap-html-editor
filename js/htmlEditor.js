@@ -18,7 +18,7 @@ angular.module("htmlEditor", [])
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.justifyCenter.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'justifyCenter\')" ng-if="commands.justifyCenter.support" data-toggle="tooltip" title="Justify Center"><i class="glyphicon glyphicon-align-center"></i></button>' +
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.justifyRight.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'justifyRight\')" ng-if="commands.justifyRight.support" data-toggle="tooltip" title="Justify Right"><i class="glyphicon glyphicon-align-right"></i></button>' +
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.justifyFull.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'justifyFull\')" ng-if="commands.justifyFull.support" data-toggle="tooltip" title="Justify Full"><i class="glyphicon glyphicon-align-justify"></i></button>' +
-            '<button type="button" class="btn btn-xs btn-default sharp" onmousedown="event.preventDefault();" ng-click="exeCmd(\'insertHorizontalRule\')" ng-if="commands.insertHorizontalRule.support" data-toggle="tooltip" title="Horizontal Rule">HR</button>'+
+            '<button type="button" class="btn btn-xs btn-default sharp" onmousedown="event.preventDefault();" ng-click="exeCmd(\'insertHorizontalRule\')" ng-if="commands.insertHorizontalRule.support" data-toggle="tooltip" title="Horizontal Rule">HR</button>' +
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.strikeThrough.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'strikeThrough\')" ng-if="commands.strikeThrough.support" data-toggle="tooltip" title="Strike Through"><span style="text-decoration: line-through;">S</span></button>' +
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.subscript.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'subscript\')" ng-if="commands.subscript.support" data-toggle="tooltip" title="Subscript"><i class="glyphicon glyphicon-subscript"></i></button>' +
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.superscript.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'superscript\')" ng-if="commands.superscript.support" data-toggle="tooltip" title="Superscript"><i class="glyphicon glyphicon-superscript"></i></button>' +
@@ -32,26 +32,32 @@ angular.module("htmlEditor", [])
             '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'insertOrderedList\',\'decimal\')"><a>Number</a></li>' +
             '</ul>' +
             '</div>' +
+            '<div class="btn-group" ng-if="commands.fontName.support" data-toggle="tooltip" title="Font Name">' +
+            '<button type="button" class="btn btn-xs btn-default sharp dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-font"></i> <span class="caret"></span></button>' +
+            '<ul class="dropdown-menu">' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontName\',font)" ng-repeat="font in FONTS | orderBy"><a ng-attr-style="{{\'font-family:\'+font}}" ng-bind="font"></a></li>' +
+            '</ul>' +
+            '</div>' +
             '<div class="btn-group" ng-if="commands.fontSize.support" data-toggle="tooltip" title="Font Size">' +
             '<button type="button" class="btn btn-xs btn-default sharp dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-text-size"></i> <span class="caret"></span></button>' +
             '<ul class="dropdown-menu">' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',6)"><a>Size 6</a></li>' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',5)"><a>Size 5</a></li>' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',4)"><a>Size 4</a></li>' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',3)"><a>Size 3</a></li>' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',2)"><a>Size 2</a></li>' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',1)"><a>Size 1</a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',6)"><a><font size="6">Size 6</font></a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',5)"><a><font size="5">Size 5</font></a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',4)"><a><font size="4">Size 4</font></a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',3)"><a><font size="3">Size 3</font></a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',2)"><a><font size="2">Size 2</font></a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'fontSize\',1)"><a><font size="1">Size 1</font></a></li>' +
             '</ul>' +
             '</div>' +
             '<div class="btn-group" ng-if="commands.heading.support" data-toggle="tooltip" title="Heading">' +
             '<button type="button" class="btn btn-xs btn-default sharp dropdown-toggle" data-toggle="dropdown">H <span class="caret"></span></button>' +
             '<ul class="dropdown-menu">' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h6\')"><a>H6</a></li>' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h5\')"><a>H5</a></li>' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h4\')"><a>H4</a></li>' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h3\')"><a>H3</a></li>' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h2\')"><a>H2</a></li>' +
-            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h1\')"><a>H1</a></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h1\')"><h1><a>heading 1</a></h1></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h2\')"><h2><a>heading 2</a></h2>></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h3\')"><h3><a>heading 3</a></h3></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h4\')"><h4><a>heading 4</a></h4></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h5\')"><h5><a>heading 5</a></h5></li>' +
+            '<li onmousedown="event.preventDefault();" ng-click="exeCmd(\'heading\',\'h6\')"><h6><a>heading 6</a></h6></li>' +
             '</ul>' +
             '</div>' +
             '<button type="button" class="btn btn-xs btn-default sharp" onmousedown="event.preventDefault();" ng-if="commands.createLink.support  && !is_ie" data-toggle="tooltip" title="Link" ng-click="showLinkModal()"><i class="glyphicon glyphicon-link"></i></button>' +
@@ -328,8 +334,8 @@ angular.module("htmlEditor", [])
                 };
 
                 scope.pat = {
-                    imageUrl:/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+(?:png|jpg|jpeg|gif|svg)+$/,
-                    linkUrl:/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
+                    imageUrl: /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+(?:png|jpg|jpeg|gif|svg)+$/,
+                    linkUrl: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
                 };
 
                 scope.commands = {
@@ -443,6 +449,8 @@ angular.module("htmlEditor", [])
                         cmd: 'heading'
                     }
                 };
+
+                scope.FONTS=['Arial','Helvetica','Times New Roman','Times','Courier New','Courier','Verdana','Georgia','Palatino','Garamond','Bookman','Comic Sans MS','Trebuchet MS','Arial Black','Impact'];
 
                 for (var c in scope.commands) {
                     scope.commands[c].support = document.queryCommandSupported(c);
@@ -575,7 +583,7 @@ angular.module("htmlEditor", [])
                 }
 
                 function wordsCount() {
-                    $timeout(function(){
+                    $timeout(function () {
                         var content = el.textContent.trim();
                         scope.count = content.length ? content.replace(/\s+/g, ' ').split(' ').length : 0;
                     });
