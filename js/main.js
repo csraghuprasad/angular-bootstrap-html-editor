@@ -1,6 +1,6 @@
 angular.module("editor", ['htmlEditor', "ui.router"])
     .config(['$stateProvider', '$urlRouterProvider',function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise("/home");
+        $urlRouterProvider.otherwise("/");
 
         var homeState = {
             name: 'home',
