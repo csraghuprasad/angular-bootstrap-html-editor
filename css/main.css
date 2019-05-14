@@ -4,6 +4,9 @@ body,h1,h2,h3,h4,h5,h6,p,table,ul,ol,.navbar{
 html{
     overflow-y:scroll ;
 }
+body{
+    visibility: hidden;
+}
 header{
     height: 50px;
 }
@@ -23,6 +26,7 @@ footer .cr {
     color: white;
     background-color: #777;
 }
+
 .sharp {
     border-radius: 0;
 }
