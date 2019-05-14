@@ -18,7 +18,7 @@ angular.module("htmlEditor", [])
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.justifyCenter.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'justifyCenter\')" ng-if="commands.justifyCenter.support" data-toggle="tooltip" title="Justify Center"><i class="glyphicon glyphicon-align-center"></i></button>' +
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.justifyRight.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'justifyRight\')" ng-if="commands.justifyRight.support" data-toggle="tooltip" title="Justify Right"><i class="glyphicon glyphicon-align-right"></i></button>' +
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.justifyFull.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'justifyFull\')" ng-if="commands.justifyFull.support" data-toggle="tooltip" title="Justify Full"><i class="glyphicon glyphicon-align-justify"></i></button>' +
-            '<button type="button" class="btn btn-xs btn-default sharp" onmousedown="event.preventDefault();" ng-click="exeCmd(\'insertHorizontalRule\')" ng-if="commands.insertHorizontalRule.support" data-toggle="tooltip" title="Horizontal Rule">HR</button>' +
+            '<button type="button" class="btn btn-xs btn-default sharp" onmousedown="event.preventDefault();" ng-click="exeCmd(\'insertHorizontalRule\')" ng-if="commands.insertHorizontalRule.support" data-toggle="tooltip" title="Horizontal Rule"><i class="glyphicon glyphicon-resize-horizontal"></i></button>' +
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.strikeThrough.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'strikeThrough\')" ng-if="commands.strikeThrough.support" data-toggle="tooltip" title="Strike Through"><span style="text-decoration: line-through;">S</span></button>' +
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.subscript.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'subscript\')" ng-if="commands.subscript.support" data-toggle="tooltip" title="Subscript"><i class="glyphicon glyphicon-subscript"></i></button>' +
             '<button type="button" class="btn btn-xs btn-default sharp" ng-class="{\'active\':commands.superscript.enabled}" onmousedown="event.preventDefault();" ng-click="exeCmd(\'superscript\')" ng-if="commands.superscript.support" data-toggle="tooltip" title="Superscript"><i class="glyphicon glyphicon-superscript"></i></button>' +
@@ -76,7 +76,7 @@ angular.module("htmlEditor", [])
             link: function (scope, element) {
                 scope.is_ie = /MSIE|Trident/.test(window.navigator.userAgent);
                 scope.is_ff = navigator.userAgent.indexOf("Firefox") != -1;
-
+                scope.words=[];
                 var sel, el = $(element).find('.html-editor')[0];
                 scope.local = false;
                 if (scope.is_ie) {
@@ -584,8 +584,19 @@ angular.module("htmlEditor", [])
 
                 function wordsCount() {
                     $timeout(function () {
-                        var content = el.textContent.trim();
-                        scope.count = content.length ? content.replace(/\s+/g, ' ').split(' ').length : 0;
+                        scope.words=[];
+                        getAllWords(el,1);
+                        scope.count= scope.words.length;
+                    });
+                }
+                function getAllWords(node, parent) {
+                    if (!parent && node.nodeType == 3) {
+                        var content = node.textContent.trim();
+                        var ws = content.length ? content.replace(/\s+/g, ' ').split(' '):[];
+                        scope.words=scope.words.concat(ws);
+                    }
+                    $.each(node.childNodes, function (i, item) {
+                        getAllWords(item);
                     });
                 }
 
