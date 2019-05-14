@@ -1,5 +1,5 @@
 angular.module("editor", ['htmlEditor', "ui.router"])
-    .config(function ($stateProvider, $urlRouterProvider,$locationProvider) {
+    .config(function ($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise("/home");
 
         var homeState = {
@@ -23,7 +23,8 @@ angular.module("editor", ['htmlEditor', "ui.router"])
         $stateProvider.state(homeState);
         $stateProvider.state(installationState);
         $stateProvider.state(demoState);
-        $locationProvider.html5Mode(true).hashPrefix('!');
+
+        //$locationProvider.html5Mode(true).hashPrefix('!');
 
     }).controller('mainCtrl', ['$scope', function ($scope) {
 
